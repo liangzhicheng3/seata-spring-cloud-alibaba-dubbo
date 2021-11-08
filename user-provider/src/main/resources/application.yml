@@ -1,0 +1,32 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user-provider
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/test-user?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    alibaba:
+      seata:
+        tx-service-group: user-provider-tx-service-group
+
+dubbo:
+  scan:
+    base-packages: com.liangzhicheng.modules.dubbo #dubbo服务扫描基准包
+  protocol:
+    name: dubbo #dubbo协议
+    port: -1 #dubbo协议端口（-1表示自增端口，从20880开始）
+  registry:
+    address: spring-cloud://localhost #挂载到spring cloud注册中心
+  cloud:
+    subscribed-services: ""
